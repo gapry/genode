@@ -17,5 +17,8 @@
 void Kernel::Thread::_call_update_pd()
 {
 	Pd * const pd = (Pd *) user_arg_1();
-	Genode::Cpu::invalidate_tlb_by_pid(pd->asid);
+	Cpu * const cpu = cpu_pool()->cpu(Cpu::executing_id());
+	cpu->invalidate_instr_cache();
+	cpu->clean_invalidate_data_cache();
+	cpu->invalidate_tlb_by_pid(pd->asid);
 }

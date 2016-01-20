@@ -52,7 +52,7 @@ class Genode::Cpu : public Arm_v7
 		/**
 		 * Ensure that TLB insertions get applied
 		 */
-		static void translation_table_insertions();
+		void translation_table_insertions();
 
 		/**
 		 * Post processing after a translation was added to a translation table

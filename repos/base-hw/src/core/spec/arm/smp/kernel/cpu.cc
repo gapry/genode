@@ -38,5 +38,10 @@ extern "C" void init_kernel_mp()
 }
 
 
-void Kernel::Cpu_domain_update::_domain_update() {
-	Genode::Cpu::invalidate_tlb_by_pid(_domain_id); }
+void Kernel::Cpu_domain_update::_domain_update()
+{
+	Cpu * const cpu  = cpu_pool()->cpu(Cpu::executing_id());
+	cpu->clean_invalidate_data_cache();
+	cpu->invalidate_instr_cache();
+	cpu->invalidate_tlb_by_pid(_domain_id);
+}

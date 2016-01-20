@@ -503,13 +503,13 @@ class Genode::Arm
 		/**
 		 * Invalidate all TLB entries of the address space named 'pid'
 		 */
-		static void invalidate_tlb_by_pid(unsigned const pid) {
+		void invalidate_tlb_by_pid(unsigned const pid) {
 			asm volatile ("mcr p15, 0, %0, c8, c7, 2" :: "r" (pid) : ); }
 
 		/**
 		 * Invalidate all TLB entries
 		 */
-		static void invalidate_tlb() {
+		void invalidate_tlb() {
 			asm volatile ("mcr p15, 0, %0, c8, c7, 0" :: "r" (0) : ); }
 
 		static constexpr addr_t line_size = 1 << Board::CACHE_LINE_SIZE_LOG2;

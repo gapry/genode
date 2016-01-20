@@ -83,7 +83,12 @@ class Genode::Cpu : public Arm
 		/**
 		 * Ensure that TLB insertions get applied
 		 */
-		static void translation_table_insertions() { invalidate_tlb(); }
+		void translation_table_insertions()
+		{
+			clean_invalidate_data_cache();
+			invalidate_instr_cache();
+			invalidate_tlb();
+		}
 
 		/**
 		 * Return wether to retry an undefined user instruction after this call

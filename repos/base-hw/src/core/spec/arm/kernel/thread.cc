@@ -137,7 +137,7 @@ void Thread_event::_signal_acknowledged()
 	 *        in privileged mode, we should move this hook to the mappings
 	 *        functions.
 	 */
-	Cpu::translation_table_insertions();
+	cpu_pool()->cpu(Cpu::executing_id())->translation_table_insertions();
 	_thread->_resume();
 }
 

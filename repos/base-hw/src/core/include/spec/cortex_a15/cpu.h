@@ -442,8 +442,7 @@ class Genode::Cpu : public Arm_v7
 		void invalidate_data_cache() {
 			invalidate_inner_data_cache(); }
 
-		static void translation_table_insertions() {
-			invalidate_branch_predicts(); }
+		void translation_table_insertions() { invalidate_branch_predicts(); }
 
 		/**
 		 * Hook function called at the very beginning

@@ -19,10 +19,7 @@
 
 void Genode::Cpu::translation_table_insertions()
 {
-	using namespace Kernel;
-
-	Cpu * const cpu  = cpu_pool()->cpu(Cpu::executing_id());
-	cpu->clean_invalidate_data_cache();
+	clean_invalidate_data_cache();
 	invalidate_tlb();
 }
 
