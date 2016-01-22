@@ -49,6 +49,8 @@ Native_region * Platform::_core_only_mmio_regions(unsigned const i)
 		/* CPU-local core MMIO like interrupt controller and timer */
 		{ Board::CORTEX_A9_PRIVATE_MEM_BASE, Board::CORTEX_A9_PRIVATE_MEM_SIZE },
 
+		/* l2 cache controller */
+		{ Board::PL310_MMIO_BASE, Board::PL310_MMIO_SIZE }
 	};
 	return i < sizeof(_regions)/sizeof(_regions[0]) ? &_regions[i] : 0;
 }
