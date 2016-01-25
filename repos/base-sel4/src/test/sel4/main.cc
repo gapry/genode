@@ -165,6 +165,8 @@ int main()
 
 	dump_boot_info(*bi);
 
+	PDBG("==== [Gapry][Test]: Hello World! ====");
+
 	PDBG("set_ipc_buffer");
 
 	init_ipc_buffer();
