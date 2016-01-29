@@ -2,11 +2,12 @@
  * \brief  Kernel backend for execution contexts in userland
  * \author Adrian-Ken Rueegsegger
  * \author Reto Buerki
- * \date   2015-04-28
+ * \author Stefan Kalkowski
+ * \date   2015-02-09
  */
 
 /*
- * Copyright (C) 2015 Genode Labs GmbH
+ * Copyright (C) 2015-2016 Genode Labs GmbH
  *
  * This file is part of the Genode OS framework, which is distributed
  * under the terms of the GNU General Public License version 2.
@@ -14,7 +15,6 @@
 
 /* core includes */
 #include <kernel/thread.h>
-#include <pic.h>
 
 using namespace Kernel;
 
@@ -25,7 +25,7 @@ void Thread::exception(unsigned const cpu)
 		_mmu_exception();
 		return;
 	case NO_MATH_COPROC:
-		if (_cpu->retry_fpu_instr(&_lazy_state)) { return; }
+		if (_cpu->fpu().fault(*this)) { return; }
 		PWRN("%s -> %s: FPU error", pd_label(), label());
 		_stop();
 		return;
@@ -33,12 +33,12 @@ void Thread::exception(unsigned const cpu)
 		PWRN("%s -> %s: undefined instruction at ip=%p",
 			 pd_label(), label(), (void*)ip);
 		_stop();
+		return;
 	case SUPERVISOR_CALL:
 		_call();
 		return;
 	}
 	if (trapno >= INTERRUPTS_START && trapno <= INTERRUPTS_END) {
-		pic()->irq_occurred(trapno);
 		_interrupt(cpu);
 		return;
 	}
